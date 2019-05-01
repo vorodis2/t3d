@@ -1,0 +1,78 @@
+<!DOCTYPE html><html><head>
+<meta charset="UTF-8">
+<title>T3D</title>	
+<script src="build/divLib.js"></script>
+<script src="build/three99.js"></script>
+<script src="build/t3d.js"></script>
+
+
+<script src="build/TrackballControls.js"></script>
+<script src="build/pixi.js"></script>
+<script>
+	var trace = window.console.log.bind(window.console);
+	var dcmParam;
+
+	var camera, scene, renderer,controls;
+
+
+
+
+
+
+	function init () {
+		window.onresize = sizeWindow;
+		dcmParam=new DCM();		
+		init3D();
+
+		var tv=new TVector();
+		var tvd=new TVectorDebag(tv);		
+	}
+
+	
+
+
+	function plus (obj) {		
+		
+	}
+	
+
+	function sizeWindow () {	
+		var w=window.innerWidth-467
+		var h=window.innerHeight-38
+		this.camera.aspect = w / h;
+		this.camera.updateProjectionMatrix();
+		this.renderer.setSize(w, h);
+		this.intRend = 1;
+
+		
+	}
+
+	function init3D () {
+		camera = new THREE.PerspectiveCamera( 70, 400 / 400, 1, 1000 );
+		camera.position.z = 40;
+		scene = new THREE.Scene();
+		scene.add( new THREE.AmbientLight( 0xffffff, 0.8 ) );
+		renderer = new THREE.WebGLRenderer( { antialias: true } );
+		renderer.setPixelRatio( window.devicePixelRatio );		
+		renderer.setSize( 400, 400 );		
+		renderer.setClearColor(0x79bccc, 1);		
+		renderer.domElement.style.position = 'fixed';
+		renderer.domElement.style.top = '36px';
+		renderer.domElement.style.left = '465px';
+		document.body.appendChild( renderer.domElement );
+		controls = new THREE.TrackballControls( camera, renderer.domElement );
+		controls.minDistance = 300;
+		controls.maxDistance = 1300;
+
+		animate();
+		sizeWindow();
+	}
+	function animate() {
+		requestAnimationFrame(animate);
+		renderer.render( scene, camera);
+		controls.update();				
+	}
+
+
+
+</script></head><body onload="init()"></body></html>
